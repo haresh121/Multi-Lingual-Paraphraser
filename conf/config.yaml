@@ -2,7 +2,7 @@ language: english
 data-args:
   train-files:
     data/train/msr.tsv: ["\t", 3, 4] # File Path : [sep, source_sentence, target_sentence]
-    data/train/ppdb.txt: ["|||", 1, 2]
+#    data/train/ppdb.txt: ["|||", 1, 2]
   validation-files:
     data/valid/msr.tsv: ["\t", 3, 4]
   word-files:
@@ -10,16 +10,19 @@ data-args:
 model-args:
   model_name_or_path: t5-base
   tokenizer_name_or_path: t5-base
+  logging_file_path: logs/training.log
+  output_dir: models/
   max_seq_length: 512
+  n_epochs: 1
   learning_rate: 3e-4
   weight_decay: 0.0
   adam_epsilon: 1e-8
-  warmup_steps: 0
+  warmup_steps: 2
   train_batch_size: 6
   eval_batch_size: 6
-  num_train_epochs: 2
+  num_train_epochs: 1
   gradient_accumulation_steps: 16
-  n_gpu: 1
+  n_gpu: 0
   early_stop_callback: False
   fp_16: False
   max_grad_norm: 1.0

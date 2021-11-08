@@ -11,8 +11,10 @@ import hydra
 from omegaconf import DictConfig
 from cleantext import clean as CLEAN
 from tqdm.auto import tqdm
+from pprint import pprint
 
 PATH = os.getcwd()
+CONF = ""
 
 
 class CustomDataset(Dataset):
@@ -21,7 +23,6 @@ class CustomDataset(Dataset):
         self.name = kwargs.get('name')
         self.files = kwargs.get('path')
         self.sep, self.s1, self.s2 = kwargs.get('d_args')
-        print(self.sep, self.s1, self.s2)
         self.tokenizer = T5Tokenizer.from_pretrained(kwargs.get('tokenizer_name_or_path'))
         self.max_length = kwargs.get('max_length')
 
@@ -30,6 +31,8 @@ class CustomDataset(Dataset):
 
         self.build_data()
 
+    def __repr__(self):
+        return f"__CustomDatasetClass__{self.name}__"
 
     def __len__(self):
         return len(self.source)
@@ -61,7 +64,6 @@ class CustomDataset(Dataset):
             replace_with_currency_symbol="<CUR>"
         )
         for n, file in enumerate(self.files):
-            print(f"Processing File : {PATH+'/'+file}, num : {n}")
             with open(PATH+"/"+file) as f:
                 data = list(f.readlines())[1:]
             for line in tqdm(data):
@@ -83,13 +85,17 @@ class CustomDataset(Dataset):
 
 
 @hydra.main(config_path="../../conf", config_name="config")
-def prepare_data(cfg: DictConfig):
-    ret = {"trainData": "", "validationData": "", "testData": ""}
+def get_config(cfg: DictConfig):
+    global CONF
+    CONF = cfg
+
+def generate_datasets(cfg: DictConfig):
+    ret = {"trainData": None, "validationData": None, "testData": None}
     for split in ["train-files", "validation-files", "test-files"]:
         test = cfg['data-args'].get(split, None)
         if test:
-            name = split.split("-")[0]+"Data"
-            print(name)
+            name = split.split("-")[0] + "Data"
+            print("Processing ", name)
             args = dict(
                 name=name,
                 path=[],
@@ -104,10 +110,13 @@ def prepare_data(cfg: DictConfig):
                 args['d_args'][1].append(file_args[1])
                 args['d_args'][2].append(file_args[2])
             ret[name] = CustomDataset(**args)
-
     return ret
 
+def get_datasets():
+    get_config()
+    return CONF, generate_datasets(CONF)
 
 if __name__ == "__main__":
-    ret = prepare_data()
-    print(ret)
+    get_config()
+    ret = generate_datasets(CONF)
+    pprint(ret)

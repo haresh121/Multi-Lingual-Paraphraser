@@ -1,0 +1,15 @@
+INFO:root:T5FineTuner Initializing
+INFO:filelock:Lock 140654495261024 acquired on /Users/haresh/.cache/huggingface/transformers/ab4e948915b067f5cb6e5105f6f85044fd717b133f43240db67899a8fc7b29a2.26934c75adf19ceac3c268b721ba353356b7609c45f5627550326f275a2163b4.lock
+INFO:filelock:Lock 140654495261024 released on /Users/haresh/.cache/huggingface/transformers/ab4e948915b067f5cb6e5105f6f85044fd717b133f43240db67899a8fc7b29a2.26934c75adf19ceac3c268b721ba353356b7609c45f5627550326f275a2163b4.lock
+INFO:root:T5FineTuner Initializing
+INFO:root:T5FineTuner Initializing
+INFO:root:T5FineTuner Initializing
+INFO:root:T5FineTuner Initializing
+INFO:root:T5FineTuner Initializing
+INFO:root:T5FineTuner Initializing
+INFO:root:T5FineTuner Initializing
+INFO:root:T5FineTuner Initializing
+INFO:root:validation started for batch: 0
+INFO:root:T5FineTuner Initializing
+INFO:root:validation started for batch: 0
+INFO:root:T5FineTuner Initializing
